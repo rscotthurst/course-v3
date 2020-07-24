@@ -17,11 +17,11 @@ GCP charges separately for the base CPU platform, and the GPU. We have two recom
 
 ### Standard Compute
 
-The base platform we suggest is called `n2d-highmem-8`, and costs $0.11 per hour. Attaching a T4 GPU costs $0.11 per hour so both together amount to **$0.22 per hour**. 
+The base platform we suggest is called `n1-highmem-8`, and costs $0.10 per hour. Attaching a P100 GPU costs $0.43 per hour so both together amount to **$0.53 per hour**. 
 
 ### Budget Compute
 
-If you have a tight budget you might want to go with a cheaper setup. In this case, we suggest a `n2d-highmem-4` instance ($0.055 per hour) with the same T4 GPU, for a total of **$0.165 per hour**. 
+If you have a tight budget you might want to go with a cheaper setup. In this case, we suggest a `n1-highmem-4` instance ($0.05 per hour) with the same T4 GPU ($0.11 per hour), for a total of **$0.16 per hour**. 
 
 ### Storage
 
@@ -31,10 +31,10 @@ In both cases, by getting the suggested 200GB Standard Disk storage size ([less 
 
 Considering that the course requires, over 2 months, 80 hours of homework plus the 2 hours of working through each lesson, we calculated roughly how much you would spend in the course with each of the setups.
 
-- *Standard Compute* + *Storage*: (80+2\*7)\*$0.22 + $8*2 =  **$36.68**
+- *Standard Compute* + *Storage*: (80+2\*7)\*$0.22 + $8*2 =  **$49.82**
 - *Budget Compute* + *Storage*: (80+2\*7)\*$0.165 + $8*2 =  **$31.51**
 
-Even if you were to work on the course twice the time that we suggest as minimum, your expenditure would amount to **$73.36** which is less than 1/4 of the credits GCP gives you. Therefore we suggest to go for the Standard Compute option.
+Even if you were to work on the course twice the time that we suggest as minimum, your expenditure would amount to **$99.64** which is less than 1/3 of the credits GCP gives you. Therefore we suggest to go for the Standard Compute option.
 
 ## Step 1: Creating your account
 
@@ -113,15 +113,15 @@ This gcloud configuration is called [default].
 
 To create the instance we recommend, just copy and paste the following command in your terminal. You can change \$INSTANCE_NAME to any name you want for your instance. 
 
-If you choose the budget compute option, please replace the values of the parameters on the lines with a 'budget:' comment (e.g. replace "n2d-highmem-8" by "n2d-highmem-4").
+If you choose the budget compute option, please replace the values of the parameters on the lines with a 'budget:' comment (e.g. replace "n1-highmem-8" by "n1-highmem-4").
 
 ```bash
 export IMAGE_FAMILY="pytorch-latest-gpu" # or "pytorch-latest-cpu" for non-GPU instances
-export ZONE="us-west1-b"
+export ZONE="us-central1-f"
 export INSTANCE_NAME="my-fastai-instance"
-export INSTANCE_TYPE="n2d-highmem-8" # budget: "n2d-highmem-4"
+export INSTANCE_TYPE="n1-highmem-8" # budget: "n1-highmem-4"
 
-# budget: 'type=nvidia-tesla-T4,count=1'
+# budget: 'type=nvidia-tesla-t4,count=1'
 gcloud compute instances create $INSTANCE_NAME \
         --zone=$ZONE \
         --image-family=$IMAGE_FAMILY \
@@ -190,7 +190,7 @@ git pull
 You should also update the fastai library:
 
 ``` bash
-sudo /opt/anaconda3/bin/conda install -c fastai fastai
+conda install -c fastai fastai
 ```
 
 Next, from your [jupyter notebook](http://localhost:8080/tree): click on 'tutorials', 'fastai', 'course-v3', and you should see something like this:
